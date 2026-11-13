@@ -1,6 +1,6 @@
 ---
-title: "Title of the Project"
-author: "First  Last Name"
+title: "Hidden Markov Models for Stock Market Regime Detection"
+author: "Jayant Saini, Udayan Sablok, Pranshu Sharma"
 date: "`r Sys.Date()`" #  
 output:
   pdf_document:
@@ -9,7 +9,7 @@ spacing: double
 header-includes:
 - \usepackage{fancyhdr}
 - \pagestyle{fancy}
-- \fancyhead[L]{Title of Project}
+- \fancyhead[L]{Hidden Markov Models for Stock Market Regime Detection}
 - \fancyfoot[CO,CE]{}
 - \fancyfoot[LE,RO]{\thepage}
 - \usepackage{setspace}\doublespacing
@@ -30,14 +30,22 @@ knitr::opts_chunk$set(echo = TRUE)
 \newpage 
 
 # Introduction
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and 
-MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Financial markets do not behave consistently over time, as periods of growth, decline, stability, and high volatility can occur under different market conditions.
+To describe these market conditions more precisely, we define three market regimes: bull, bear and consolidation/sideways.
+A bear market regime occurs when stock prices decline by 20% or more from a recent peak over a sustained period of time.
+A bull market regime occurs when stock prices rise 20% or more from a recent low over a sustained period of time.
+A sideways market regime occurs when stock prices fluctuate up and down within a narrow range.
+An important distinction is that these market regimes are not directly observable. 
+We can observe stock prices and returns, but we cannot directly observe whether the market is currently in a bull, bear, or sideways regime.
 
+Due to the "hidden" nature of the stock market regimes, Hidden Markov Models provide a helpful framework for identifying and analysing these unobservable regimes.
+Hidden Markov models can be used to identify the likelihood of moving between market regimes and the signals given by the market (stock-prices) that define each state.
+The primary objective of this project is to use both simulated and real-world stock-market data to fit a Hidden Markov Model, and interpret the characteristics and transition probabilities of the regimes it identifies.
 
+The rest of this project is as follows. Section 2 reviews the theory of Markov chains and Hidden Markov Models.
+Section 3 presents the simulation study and real stock-market data application (all code and outputs will be in an Appendix).
+Section 4 summarizes the main findings and limitations of the project, followed by References in section 5.
 
-The rest of this project is as follows. In Section 2, we review some basic concepts. 
-In Section 3, we introduce the topic. In Section 4, we have an application and simualtion. 
-Section 5 provides conclusion and some closing remarks. 
 
 
 
@@ -107,3 +115,11 @@ Method& {Est} (SE)    &{Est} (SE) \\    %  95\% CI \hspace{0.5cm}  95\% CI
 # Conclusion 
 
 # References
+
+Borst, David. “Detecting Market Regimes: Hidden Markov Model.” *Medium*, 26 Aug. 2025, [https://datadave1.medium.com/detecting-market-regimes-hidden-markov-model-2462e819c72e](https://datadave1.medium.com/detecting-market-regimes-hidden-markov-model-2462e819c72e).
+
+Hayes, Adam. “Sideways Markets Explained: Trading Tactics and Benefits.” *Investopedia*, 21 May 2026, [https://www.investopedia.com/terms/s/sidewaysmarket.asp](https://www.investopedia.com/terms/s/sidewaysmarket.asp).
+
+QuestDB. “Market Regime Detection Using Hidden Markov Models.” *QuestDB Glossary*, [https://questdb.com/glossary/market-regime-detection-using-hidden-markov-models/](https://questdb.com/glossary/market-regime-detection-using-hidden-markov-models/).
+
+Scotiabank Advice+ Team. “Bull vs. Bear Market: The Basics Explained.” *Scotiabank*, 27 Oct. 2026, [https://www.scotiabank.com/ca/en/personal/advice-plus/features/posts.bear-vs-bull-market-the-basics.html](https://www.scotiabank.com/ca/en/personal/advice-plus/features/posts.bear-vs-bull-market-the-basics.html).
