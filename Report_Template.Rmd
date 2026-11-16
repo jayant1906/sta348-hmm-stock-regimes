@@ -52,26 +52,33 @@ Section 4 summarizes the main findings and limitations of the project, followed 
 
 # Review of the Topic
 
-When you click the **Knit** button a document will be generated that includes both content as well 
-as the output of any embedded R code chunks within the document. You can embed an R code chunk like 
-this:
-
-```{r cars,comment=NA}
-summary(cars)
-```
+A Hidden Markov Model is a model where we observe a sequence of emissions, in this case stock market returns; however, the sequence of states the model went through to generate these emissions is unknown, i.e., hidden.
+In our project, the hidden states are stock market regimes, as we cannot directly observe them but must instead infer them from stock market data.
+Hidden Markov Models are built on the theory of Markov Chains, i.e. the hidden states follow the Markov assumption.
+To understand how HMMs can be applied to stock market regime detection, we first review the fundamentals of Markov chains, then introduce Hidden Markov Models and their applications to stock markets.
 
 
+## Markov Chains
+By definition a Markov chain is a stochastic process that describes a sequence of events where the probability of the next state depends solely on the current state and not how we got to the current state.
+This property of dependence on just the current state is known as the 'memoryless' or Markov property.
+Mathematically, the Markov property is defined as: 
+$$P(X_{t+1} = j \mid X_t = i, \ldots, X_0) = P(X_{t+1} = j \mid X_t = i)$$
 
-You can also embed publication quality plots, for example:
+The probabilties of transitioning between states in a Markov Chain can be represented as a matrix. This is called the transition matrix and is denoted by (P).
+Each entry in the matrix (P_{ij}) represents the probability of transitioning from state (i) to state (j) in the next time step.
+Mathematically, each entry is defined as:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+$$
+P_{ij}=P(X_{t+1}=j\mid X_t=i)
+$$
 
+Since the system must transition to one of the possible states, the probabilities in each row of the transition matrix must sum to 1.
 
+$$
+\sum_{j=1}^{n}P_{ij}=1
+$$
 
-## Definitions and Examples
-Such as importance of longitudinal data analysis (separate age and cohort effect like in the effect of age on reading ability), different correlation structures, missing data, etc.
+In this project, we consider a finite-state, time-homogeneous Markov chain, where the states represent different stock market regimes. The state space is finite because we assume a fixed number of possible regimes, and the chain is time-homogeneous because the transition probabilities between these regimes remain constant over time. The transition matrix therefore describes the probabilities of moving between different market regimes.
 
 
 
@@ -120,6 +127,10 @@ Borst, David. “Detecting Market Regimes: Hidden Markov Model.” *Medium*, 26 
 
 Hayes, Adam. “Sideways Markets Explained: Trading Tactics and Benefits.” *Investopedia*, 21 May 2026, [https://www.investopedia.com/terms/s/sidewaysmarket.asp](https://www.investopedia.com/terms/s/sidewaysmarket.asp).
 
+The MathWorks, Inc. (n.d.). *Hidden Markov models (HMM).* MATLAB & Simulink. Retrieved November 16, 2026, from [https://es.mathworks.com/help/stats/hidden-markov-models-hmm.html](https://es.mathworks.com/help/stats/hidden-markov-models-hmm.html)
+
 QuestDB. “Market Regime Detection Using Hidden Markov Models.” *QuestDB Glossary*, [https://questdb.com/glossary/market-regime-detection-using-hidden-markov-models/](https://questdb.com/glossary/market-regime-detection-using-hidden-markov-models/).
 
 Scotiabank Advice+ Team. “Bull vs. Bear Market: The Basics Explained.” *Scotiabank*, 27 Oct. 2026, [https://www.scotiabank.com/ca/en/personal/advice-plus/features/posts.bear-vs-bull-market-the-basics.html](https://www.scotiabank.com/ca/en/personal/advice-plus/features/posts.bear-vs-bull-market-the-basics.html).
+
+Stanford Institute for Human-Centered Artificial Intelligence. (n.d.). *What is a Markov chain?* Stanford HAI. Retrieved November 16, 2026, from [https://hai.stanford.edu/ai-definitions/what-is-a-markov-chain](https://hai.stanford.edu/ai-definitions/what-is-a-markov-chain)
