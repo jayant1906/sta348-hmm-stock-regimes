@@ -84,7 +84,7 @@ Hidden Markov Models have 3 main components:
 These 3 components together define a Hidden Markov Model: $$\lambda = (A, B, \pi)$$.
 Visually, the Hidden Markov Model looks as such:
 
-```{r hmm-diagram, echo=FALSE, fig.width=9, fig.height=4.2, fig.cap="Structure of a Hidden Markov Model"}
+```{r hmm-diagram, echo=FALSE, dev="pdf", fig.width=9, fig.height=4.2, fig.align="center", fig.cap="Structure of a Hidden Markov Model"}
 par(mar = c(0, 0, 0, 0), xpd = NA)
 plot.new()
 plot.window(xlim = c(0, 10), ylim = c(0, 5))
