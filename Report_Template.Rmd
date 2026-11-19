@@ -5,14 +5,7 @@ date: "`r Sys.Date()`" #
 output:
   pdf_document:
       number_sections: true
-spacing: double
-header-includes:
-- \usepackage{fancyhdr}
-- \pagestyle{fancy}
-- \fancyhead[L]{Hidden Markov Models for Stock Market Regime Detection}
-- \fancyfoot[CO,CE]{}
-- \fancyfoot[LE,RO]{\thepage}
-- \usepackage{setspace}\doublespacing
+linestretch: 2
 ---
 
 ```{=tex}
@@ -61,7 +54,9 @@ To understand how HMMs can be applied to stock market regime detection, we first
 ## Markov Chains
 A markov chain models transition between states under the assumption of the Markov property.
 $$
-P(X_{t+1}=j\mid X_t=i).
+P(X_{t+1}=j\mid X_t=i,\ldots,X_0)
+=
+P(X_{t+1}=j\mid X_t=i)
 $$
 The transition probabilties are modelled by the transition matrix (P) which is defined as:
 $$
@@ -146,6 +141,17 @@ Y_t \mid X_t=i \sim \mathcal{N}(\mu_i,\sigma_i^2)
 \item $\sigma_i^2$: variance of stock market returns in state $i$.
 \end{itemize}
 
+## Algorithms
+To estimate the parameters of the Hidden Markov Model and identify the market regimes i.e. the hidden states, our project uses 2 algorithms: the Baum–Welch algorithm and the Viterbi algorithm.
+
+### Baum-Welch Algorithm
+The Baum-Welch algorithm finds the likelihood maximzing parameters of a Hidden Markov Model using the observed data.
+The algorithm is a type of Expectation-Maximization algorithm which updates transition probabilities, emission distribution parameters (mean and variance), and initial probabilities ($\pi$) to increase the likelihood of the observed sequence until convergence.
+In our project, we use the Baum-Welch algorithm while fitting the Hidden Markov Model on real and simulated stock market returns to estimate model parameters.
+
+### Viterbi Algorithm
+The Viterbi Algorithm is a dynamic programming technique used in the context of Hidden Markov Models to uncover the most likely sequence of hidden states given a sequence of ordered data.
+In our project, the algorithm is used to uncover the sequence of market regimes based on observed stock returns.
 
 
 
