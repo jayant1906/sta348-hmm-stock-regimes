@@ -59,27 +59,18 @@ To understand how HMMs can be applied to stock market regime detection, we first
 
 
 ## Markov Chains
-By definition a Markov chain is a stochastic process that describes a sequence of events where the probability of the next state depends solely on the current state and not how we got to the current state.
-This property of dependence on just the current state is known as the 'memoryless' or Markov property.
-Mathematically, the Markov property is defined as: 
-$$P(X_{t+1} = j \mid X_t = i, \ldots, X_0) = P(X_{t+1} = j \mid X_t = i)$$
-
-The probabilties of transitioning between states in a Markov Chain can be represented as a matrix. This is called the transition matrix and is denoted by (P).
-Each entry in the matrix (P_{ij}) represents the probability of transitioning from state (i) to state (j) in the next time step.
-Mathematically, each entry is defined as:
-
-$$
-P_{ij}=P(X_{t+1}=j\mid X_t=i)
-$$
-
-Since the system must transition to one of the possible states, the probabilities in each row of the transition matrix must sum to 1.
-
-$$
-\sum_{j=1}^{n}P_{ij}=1
-$$
-
-In this project, we consider a finite-state, time-homogeneous Markov chain, where the states represent different stock market regimes. The state space is finite because we assume a fixed number of possible regimes, and the chain is time-homogeneous because the transition probabilities between these regimes remain constant over time. The transition matrix therefore describes the probabilities of moving between different market regimes.
-
+A markov chain models transition between states under the assumption of the Markov property.
+$
+P(X_{t+1}=j\mid X_t=i).
+$
+The transition probabilties are modelled by the transition matrix (P) which is defined as:
+$
+P_{ij}=P(X_{t+1}=j\mid X_t=i),
+\qquad
+\sum_j P_{ij}=1.
+$
+For the purpose of this project, we will be using a finite state, time-homogeneous Markov chain. The states in the Markov Chain will represent stock market regimes i.e. bull, bear and sideways.
+The transition matrix for our project will define the probabilities of moving between these states over time.
 
 
 ## Details of the topic

@@ -37,46 +37,6 @@
 \makeatother
 \usepackage{xcolor}
 \usepackage[margin=1in]{geometry}
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -114,7 +74,7 @@
 
 \title{Hidden Markov Models for Stock Market Regime Detection}
 \author{Jayant Saini, Udayan Sablok, Pranshu Sharma}
-\date{2026-11-13}
+\date{2026-11-16}
 
 \begin{document}
 \maketitle
@@ -158,35 +118,51 @@ and limitations of the project, followed by References in section 5.
 
 \section{Review of the Topic}\label{review-of-the-topic}
 
-When you click the \textbf{Knit} button a document will be generated
-that includes both content as well as the output of any embedded R code
-chunks within the document. You can embed an R code chunk like this:
+A Hidden Markov Model is a model where we observe a sequence of
+emissions, in this case stock market returns; however, the sequence of
+states the model went through to generate these emissions is unknown,
+i.e., hidden. In our project, the hidden states are stock market
+regimes, as we cannot directly observe them but must instead infer them
+from stock market data. Hidden Markov Models are built on the theory of
+Markov Chains, i.e.~the hidden states follow the Markov assumption. To
+understand how HMMs can be applied to stock market regime detection, we
+first review the fundamentals of Markov chains, then introduce Hidden
+Markov Models and their applications to stock markets.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(cars)}
-\end{Highlighting}
-\end{Shaded}
+\subsection{Markov Chains}\label{markov-chains}
 
-\begin{verbatim}
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-\end{verbatim}
+By definition a Markov chain is a stochastic process that describes a
+sequence of events where the probability of the next state depends
+solely on the current state and not how we got to the current state.
+This property of dependence on just the current state is known as the
+`memoryless' or Markov property. Mathematically, the Markov property is
+defined as:
+\[P(X_{t+1} = j \mid X_t = i, \ldots, X_0) = P(X_{t+1} = j \mid X_t = i)\]
 
-You can also embed publication quality plots, for example:
+The probabilties of transitioning between states in a Markov Chain can
+be represented as a matrix. This is called the transition matrix and is
+denoted by (P). Each entry in the matrix (P\_\{ij\}) represents the
+probability of transitioning from state (i) to state (j) in the next
+time step. Mathematically, each entry is defined as:
 
-\includegraphics{Report_Template_files/figure-latex/pressure-1.pdf}
+\[
+P_{ij}=P(X_{t+1}=j\mid X_t=i)
+\]
 
-\subsection{Definitions and Examples}\label{definitions-and-examples}
+Since the system must transition to one of the possible states, the
+probabilities in each row of the transition matrix must sum to 1.
 
-Such as importance of longitudinal data analysis (separate age and
-cohort effect like in the effect of age on reading ability), different
-correlation structures, missing data, etc.
+\[
+\sum_{j=1}^{n}P_{ij}=1
+\]
+
+In this project, we consider a finite-state, time-homogeneous Markov
+chain, where the states represent different stock market regimes. The
+state space is finite because we assume a fixed number of possible
+regimes, and the chain is time-homogeneous because the transition
+probabilities between these regimes remain constant over time. The
+transition matrix therefore describes the probabilities of moving
+between different market regimes.
 
 \subsection{Details of the topic}\label{details-of-the-topic}
 
@@ -233,6 +209,10 @@ Hayes, Adam. ``Sideways Markets Explained: Trading Tactics and
 Benefits.'' \emph{Investopedia}, 21 May 2026,
 \url{https://www.investopedia.com/terms/s/sidewaysmarket.asp}.
 
+The MathWorks, Inc.~(n.d.). \emph{Hidden Markov models (HMM).} MATLAB \&
+Simulink. Retrieved November 16, 2026, from
+\url{https://es.mathworks.com/help/stats/hidden-markov-models-hmm.html}
+
 QuestDB. ``Market Regime Detection Using Hidden Markov Models.''
 \emph{QuestDB Glossary},
 \url{https://questdb.com/glossary/market-regime-detection-using-hidden-markov-models/}.
@@ -240,5 +220,10 @@ QuestDB. ``Market Regime Detection Using Hidden Markov Models.''
 Scotiabank Advice+ Team. ``Bull vs.~Bear Market: The Basics Explained.''
 \emph{Scotiabank}, 27 Oct.~2026,
 \url{https://www.scotiabank.com/ca/en/personal/advice-plus/features/posts.bear-vs-bull-market-the-basics.html}.
+
+Stanford Institute for Human-Centered Artificial Intelligence. (n.d.).
+\emph{What is a Markov chain?} Stanford HAI. Retrieved November 16,
+2026, from
+\url{https://hai.stanford.edu/ai-definitions/what-is-a-markov-chain}
 
 \end{document}
