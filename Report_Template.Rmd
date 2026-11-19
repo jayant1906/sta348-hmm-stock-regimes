@@ -60,15 +60,15 @@ To understand how HMMs can be applied to stock market regime detection, we first
 
 ## Markov Chains
 A markov chain models transition between states under the assumption of the Markov property.
-[
+$$
 P(X_{t+1}=j\mid X_t=i).
-]
+$$
 The transition probabilties are modelled by the transition matrix (P) which is defined as:
-[
+$$
 P_{ij}=P(X_{t+1}=j\mid X_t=i),
 \qquad
 \sum_j P_{ij}=1.
-]
+$$
 For the purpose of this project, we will be using a finite state, time-homogeneous Markov chain. The states in the Markov Chain will represent stock market regimes i.e. bull, bear and sideways.
 The transition matrix for our project will define the probabilities of moving between these states over time.
 
